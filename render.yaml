@@ -1,0 +1,25 @@
+services:
+  # ---- Backend proxy (holds the Smartsheet token) ----
+  - type: web
+    name: cch-legal-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SMARTSHEET_TOKEN
+        sync: false            # set this in the Render dashboard, never in git
+      - key: SHEET_ID
+        value: "4690720530059140"
+      - key: ALLOWED_ORIGINS
+        sync: false            # e.g. https://<you>.github.io  (optional; blank = allow all)
+
+  # ---- Static frontend (optional: you can also host on GitHub Pages) ----
+  - type: web
+    name: cch-legal-frontend
+    runtime: static
+    rootDir: frontend
+    plan: free
+    staticPublishPath: .
+    buildCommand: ""
